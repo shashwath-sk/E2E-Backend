@@ -58,6 +58,24 @@ const addNewContentField = async(Id,newField)=>{
     
 }
 
+const updateContentField = async(Id,changeField)=>{
+    const content = await db.ContentTypes.findOne({
+        where:{
+            id:Id
+        }
+    })
+    // console.log(content.Fields[newField]);
+    // if(content.hasOwnProperty(newField)){
+    //     throw new Error('Field already exists');
+    // } 
+    delete content.Fields[changeField["old"]];
+    content.Fields[changeField["new"]] = "";
+    content.changed('Fields',true);
+    await content.save();
+    return content;
+    
+}
+
 const deleteContentField = async(Id,newField)=>{
     const content = await db.ContentTypeEntries.findOne({
         where:{
@@ -106,10 +124,11 @@ module.exports = {
     getContents,
     getContent,
     addNewContentField,
+    updateContentField,
     deleteContentField,
     getContentEntries,
     addContentEntries,
-    updateContentEntries
+    updateContentEntries,
 }
 
 
