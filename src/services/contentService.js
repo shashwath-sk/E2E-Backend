@@ -40,6 +40,18 @@ const addContent = async(name)=>{
     })
     return newContent;
 };
+const updateContentName = async(Id,name)=>{
+    const content = await db.ContentTypes.update({
+        Name:name
+    },{
+        where:{
+            id:Id
+        },
+        returning: true,
+        plain: true
+    })
+    return content[1];
+}
 
 const addNewContentField = async(Id,newField)=>{
     const content = await db.ContentTypes.findOne({
@@ -76,8 +88,8 @@ const updateContentField = async(Id,changeField)=>{
     
 }
 
-const deleteContentField = async(Id,newField)=>{
-    const content = await db.ContentTypeEntries.findOne({
+const deleteContentField = async(Id,delField)=>{
+    const content = await db.ContentTypes.findOne({
         where:{
             id:Id
         }
@@ -85,7 +97,7 @@ const deleteContentField = async(Id,newField)=>{
     // if(!content.Fields.hasOwnProperty(newField)){
     //     throw new Error('Field does not exist');
     // }
-    delete content.Fields[newField];
+    delete content.Fields[delField];
     content.changed('Fields',true);
     await content.save();
     return content;
@@ -114,9 +126,11 @@ const updateContentEntries = async(id,entry)=>{
     },{
         where:{
             id
-        }
+        },
+        returning: true,
+        plain: true
     })
-    return newEntry;
+    return newEntry[1];
 }
 
 module.exports = {
@@ -129,6 +143,7 @@ module.exports = {
     getContentEntries,
     addContentEntries,
     updateContentEntries,
+    updateContentName
 }
 
 
