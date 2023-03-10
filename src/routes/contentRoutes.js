@@ -2,7 +2,7 @@
 const express  =  require('express');
 const {getContentsController,getContentController,addContentController,addContentFieldController,
     deleteContentFieldController,getContentEntriesController,addContentEntriesController,
-    updateContentEntriesController,updateContentFieldController} = require('../controllers/contentController.js');
+    updateContentEntriesController,updateContentFieldController,updateContentNameController} = require('../controllers/contentController.js');
 // const userAuth = require('../middleware/userAuth');
 const contentRouter = express.Router();
 
@@ -15,6 +15,8 @@ contentRouter.get('/content/:Id',getContentController);
 //post content-type
 contentRouter.post('/content',addContentController);
 
+//update content-type name
+contentRouter.put('/contents/:Id',updateContentNameController);
 //post new field to content-type
 contentRouter.post('/content/:Id',addContentFieldController);
 
