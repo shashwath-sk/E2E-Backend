@@ -133,6 +133,18 @@ const updateContentEntries = async(id,entry)=>{
     return newEntry[1];
 }
 
+const deleteContentEntries = async(id,entryId)=>{
+    const newEntry = await db.ContentTypeEntries.destroy({
+        where:{
+            id:entryId
+        },
+        returning: true,
+        plain: true
+    })
+    console.log(newEntry);
+    return newEntry;
+}
+
 module.exports = {
     addContent,
     getContents,
@@ -143,7 +155,8 @@ module.exports = {
     getContentEntries,
     addContentEntries,
     updateContentEntries,
-    updateContentName
+    updateContentName,
+    deleteContentEntries
 }
 
 

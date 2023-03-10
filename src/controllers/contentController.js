@@ -1,5 +1,5 @@
 const {addContent,getContents,getContent,addNewContentField,deleteContentField,
-    getContentEntries,addContentEntries,updateContentEntries,updateContentField,updateContentName
+    getContentEntries,addContentEntries,updateContentEntries,updateContentField,updateContentName,deleteContentEntries
 } = require('../services/contentService.js');
 
 const getContentsController = async(req, res)=>{
@@ -120,6 +120,16 @@ const updateContentEntriesController = async(req, res)=>{
     }
 }  
 
+const deleteContentEntriesController = async(req, res)=>{
+    try{
+        const {id,entryId} = req.params;
+        const contentTypeEntries = await deleteContentEntries(id,entryId);
+        res.status(200).json(contentTypeEntries);
+    }
+    catch(error){
+        res.status(500).json(error);
+    }
+}
 
 
 module.exports = {
@@ -132,5 +142,6 @@ module.exports = {
     getContentEntriesController,
     addContentEntriesController,
     updateContentEntriesController,
-    updateContentNameController
+    updateContentNameController,
+    deleteContentEntriesController
 }

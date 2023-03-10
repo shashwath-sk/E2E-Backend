@@ -2,7 +2,8 @@
 const express  =  require('express');
 const {getContentsController,getContentController,addContentController,addContentFieldController,
     deleteContentFieldController,getContentEntriesController,addContentEntriesController,
-    updateContentEntriesController,updateContentFieldController,updateContentNameController} = require('../controllers/contentController.js');
+    updateContentEntriesController,updateContentFieldController,updateContentNameController,
+    deleteContentEntriesController} = require('../controllers/contentController.js');
 // const userAuth = require('../middleware/userAuth');
 const contentRouter = express.Router();
 
@@ -33,5 +34,8 @@ contentRouter.get('/content/:Id/entries',getContentEntriesController);
 contentRouter.post('/content/:Id/entries',addContentEntriesController);
 
 //update entries of specific content-type
-// contentRouter.put('/content/:Id/entries/:id',updateContentEntriesController);
+contentRouter.put('/content/:id/entries/:entryId',updateContentEntriesController);
+
+//delete extries of specific content-type
+contentRouter.delete('/content/:id/entries/:entryId',deleteContentEntriesController);
 module.exports  = contentRouter;
